@@ -1,0 +1,15 @@
+storage:
+  type: mongodb
+  database:
+    name: ""
+    host: ""
+    port: ""
+    user: ""
+    pass: ""
+    uri: "mongodb://%user%:%pass%@%host%:%port%/?authSource=admin&readPreference=primary&appname=TacoTokens&ssl=false"
+
+balance:
+  starting-amount: 0
+  paying:
+    min: 0.1
+    max: 10000000
