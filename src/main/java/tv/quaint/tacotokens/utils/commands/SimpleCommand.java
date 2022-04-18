@@ -37,7 +37,7 @@ public abstract class SimpleCommand implements Command<ServerCommandSource>, Sug
 
     public abstract void registerAs(CommandDispatcher<ServerCommandSource> dispatcher);
 
-    public void register(CommandDispatcher<ServerCommandSource> dispatcher, LiteralCommandNode<ServerCommandSource> as) {
+    public void register(CommandDispatcher<ServerCommandSource> dispatcher, LiteralCommandNode as) {
         for (String alias : aliases) {
             dispatcher.register(literal(alias).redirect(as));
         }

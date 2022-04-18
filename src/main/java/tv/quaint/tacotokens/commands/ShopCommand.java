@@ -118,7 +118,7 @@ public class ShopCommand extends SimpleCommand {
 
     @Override
     public void registerAs(CommandDispatcher<ServerCommandSource> dispatcher) {
-        LiteralCommandNode<ServerCommandSource> node = dispatcher.register(CommandManager
+        LiteralCommandNode node = dispatcher.register(CommandManager
                 .literal("shop")
                 .then(argument("shop", StringArgumentType.word()).suggests(this)
                         .then(argument("confirm", BoolArgumentType.bool()).suggests(this)

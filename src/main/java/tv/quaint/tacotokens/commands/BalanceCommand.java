@@ -166,7 +166,7 @@ public class BalanceCommand extends SimpleCommand {
 
     @Override
     public void registerAs(CommandDispatcher<ServerCommandSource> dispatcher) {
-        LiteralCommandNode<ServerCommandSource> node = dispatcher.register(CommandManager
+        LiteralCommandNode node = dispatcher.register(CommandManager
                 .literal("balance")
                 .then(argument("operation", StringArgumentType.word()).suggests(this)
                         .then(argument("online", StringArgumentType.word()).suggests(this)

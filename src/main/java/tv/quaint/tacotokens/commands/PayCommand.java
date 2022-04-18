@@ -84,7 +84,7 @@ public class PayCommand extends SimpleCommand {
 
     @Override
     public void registerAs(CommandDispatcher<ServerCommandSource> dispatcher) {
-        LiteralCommandNode<ServerCommandSource> node = dispatcher.register(CommandManager
+        LiteralCommandNode node = dispatcher.register(CommandManager
                 .literal(base)
                         .then(argument("online", StringArgumentType.word()).suggests(this)
                                 .then(argument("amount", DoubleArgumentType.doubleArg(TacoTokens.CONFIG.balanceSettings.payingMin, TacoTokens.CONFIG.balanceSettings.payingMax))
