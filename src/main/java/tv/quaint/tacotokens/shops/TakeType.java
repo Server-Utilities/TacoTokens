@@ -1,7 +1,8 @@
 package tv.quaint.tacotokens.shops;
 
 public enum TakeType {
-    ITEM,
+    CUSTOM_ITEM,
     BALANCE,
+    BASIC_ITEM
     ;
 }

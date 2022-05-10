@@ -8,5 +8,5 @@ takes:
     value: "material:emerald;amount:4;name:&7&k..&r &5&lSharded &2&lEmerith&r &7&k..;lore:<{\"text\":\"\\u00A7bUseful for getting more\"}>,<{\"text\":\"\\u00A77RTPs \\u00A7band \\u00A77Claim Blocks\\u00A78!\"}>;tags:shopItem:yes,serverItem:yes;enchantments:unbreaking:1;"
 gives:
   1:
-    type: COMMAND
-    value: "claim blocks add %player% 10"
+    type: GIVE
+    value: "%random1,5%:stone{}"

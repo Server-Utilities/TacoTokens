@@ -20,7 +20,7 @@ public class MessagingUtils {
 
     public static void sendMessageAs(Entity entity, String message) {
         for (ServerPlayerEntity p : MainUtils.getOnlinePlayers()) {
-            p.sendMessage(TextUtils.newText(message), MessageType.CHAT, entity.getUuid());
+            p.sendMessage(TextUtils.newText(message), MessageType.CHAT);
         }
     }
 }

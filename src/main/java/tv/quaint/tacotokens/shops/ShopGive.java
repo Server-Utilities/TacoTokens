@@ -4,6 +4,7 @@ import net.minecraft.server.network.ServerPlayerEntity;
 import tv.quaint.tacotokens.TacoTokens;
 import tv.quaint.tacotokens.balance.Balance;
 import tv.quaint.tacotokens.balance.BalanceManager;
+import tv.quaint.tacotokens.utils.obj.AmountJustification;
 
 public class ShopGive {
     public GiveType type;
@@ -23,10 +24,27 @@ public class ShopGive {
                         .replace("%ping%", String.valueOf(player.pingMilliseconds))
                 );
             }
+            case GIVE -> {
+                GiveGive give = new GiveGive(this.value);
+                if (! give.isValid()) return;
+
+                TacoTokens.SERVER.getCommandManager().execute(TacoTokens.SERVER.getCommandSource(),
+                        "give " + player.getEntityName() + " " + give.item
+                                .replace("%player%", player.getEntityName())
+                                .replace("%uuid%", player.getUuidAsString())
+                                .replace("%ping%", String.valueOf(player.pingMilliseconds))
+                                + " " + give.amount
+                );
+            }
             case BALANCE -> {
                 if (value.startsWith("+")) {
                     try {
-                        int add = Integer.parseInt(value.substring(1));
+                        int add = 0;
+                        if (value.substring(1).startsWith("%random")) {
+                            add = new AmountJustification(value.substring(1)).roll();
+                        } else {
+                            add = Integer.parseInt(value.substring(1));
+                        }
                         BalanceManager.getBalance(player.getUuidAsString(), true).addAmount(add);
                     } catch (Exception e) {
                         e.printStackTrace();
@@ -35,7 +53,12 @@ public class ShopGive {
                 }
                 if (value.startsWith("-")) {
                     try {
-                        int remove = Integer.parseInt(value.substring(1));
+                        int remove = 0;
+                        if (value.substring(1).startsWith("%random")) {
+                            remove = new AmountJustification(value.substring(1)).roll();
+                        } else {
+                            remove = Integer.parseInt(value.substring(1));
+                        }
                         BalanceManager.getBalance(player.getUuidAsString(), true).removeAmount(remove);
                     } catch (Exception e) {
                         e.printStackTrace();
@@ -43,7 +66,12 @@ public class ShopGive {
                     return;
                 }
                 try {
-                    int set = Integer.parseInt(value);
+                    int set = 0;
+                    if (value.startsWith("%random")) {
+                        set = new AmountJustification(value).roll();
+                    } else {
+                        set = Integer.parseInt(value);
+                    }
                     BalanceManager.getBalance(player.getUuidAsString(), true).setAmount(set);
                 } catch (Exception e) {
                     e.printStackTrace();

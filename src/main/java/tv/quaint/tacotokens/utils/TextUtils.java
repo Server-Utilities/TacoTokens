@@ -2,8 +2,8 @@ package tv.quaint.tacotokens.utils;
 
 import net.minecraft.text.ClickEvent;
 import net.minecraft.text.HoverEvent;
-import net.minecraft.text.LiteralText;
 import net.minecraft.text.MutableText;
+import net.minecraft.text.Text;
 import net.minecraft.util.Formatting;
 import tv.quaint.tacotokens.utils.text.ComponentText;
 
@@ -15,16 +15,16 @@ public class TextUtils {
     }
 
     public static MutableText newText() {
-        return new LiteralText("");
+        return Text.literal("");
     }
 
     public static MutableText newRawText(final String string) {
-        return new LiteralText(string);
+        return Text.literal(string);
     }
 
     public static MutableText blockStyle(MutableText text) {
-        MutableText separator = new LiteralText(SEPARATOR).formatted(Formatting.GRAY);
-        return new LiteralText("").append(separator).append(text).append(separator);
+        MutableText separator = Text.literal(SEPARATOR).formatted(Formatting.GRAY);
+        return Text.literal("").append(separator).append(text).append(separator);
     }
 
     public static MutableText appendButton(MutableText text, MutableText hoverText, ClickEvent.Action action, String actionValue) {

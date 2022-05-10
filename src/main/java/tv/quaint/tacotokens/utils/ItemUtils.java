@@ -247,6 +247,22 @@ public class ItemUtils {
         }
     }
 
+    public static boolean doesPlayerHaveSimilarItemWithAmount(ItemStack item, PlayerEntity player) {
+        for (ItemStack stack : getInventory(player).values()) {
+            if (getType(stack).equals(getType(item)) && stack.getCount() >= item.getCount()) return true;
+        }
+
+        return false;
+    }
+
+    public static void removeSimilarItemFromPlayerInventoryByAmount(ItemStack item, PlayerEntity player, int amount) {
+        if (doesPlayerHaveSimilarItemWithAmount(item, player)) {
+            player.getInventory().remove(stack -> (
+                    stack.getTranslationKey().equals(item.getTranslationKey()) && stack.getCount() >= item.getCount()
+            ), amount, player.getInventory());
+        }
+    }
+
 //    public static boolean doesPlayerHaveItemWithAmount(ParsedItem item, PlayerEntity player) {
 //        for (ItemStack stack : getInventory(player).values()) {
 //            if (stack.getName().equals(TextUtils.newText(item.name)) &&

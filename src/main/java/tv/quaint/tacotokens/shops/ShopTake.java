@@ -1,6 +1,10 @@
 package tv.quaint.tacotokens.shops;
 
+import net.minecraft.item.ItemStack;
+import net.minecraft.item.Items;
 import net.minecraft.server.network.ServerPlayerEntity;
+import net.minecraft.util.Identifier;
+import net.minecraft.util.registry.Registry;
 import tv.quaint.tacotokens.balance.Balance;
 import tv.quaint.tacotokens.balance.BalanceManager;
 import tv.quaint.tacotokens.shops.items.ItemParser;
@@ -18,8 +22,14 @@ public class ShopTake {
 
     public boolean predicate(ServerPlayerEntity player) {
         switch (this.type) {
-            case ITEM -> {
+            case CUSTOM_ITEM -> {
                 ParsedItem item = ItemParser.parseItemValue(this.value);
+
+                return ItemUtils.doesPlayerHaveSimilarItemWithAmount(item, player);
+            }
+            case BASIC_ITEM -> {
+                String[] split = this.value.split(",");
+                ItemStack item = ItemUtils.newItem(Registry.ITEM.get(new Identifier(split[0])), Integer.parseInt(split[1]));
 
                 return ItemUtils.doesPlayerHaveSimilarItemWithAmount(item, player);
             }
@@ -41,11 +51,22 @@ public class ShopTake {
 
     public boolean take(ServerPlayerEntity player) {
         switch (this.type) {
-            case ITEM -> {
+            case CUSTOM_ITEM -> {
                 ParsedItem item = ItemParser.parseItemValue(this.value);
 
                 if (ItemUtils.doesPlayerHaveSimilarItemWithAmount(item, player)) {
                     ItemUtils.removeSimilarItemFromPlayerInventoryByAmount(item, player, item.amount);
+                    return true;
+                }
+
+                return false;
+            }
+            case BASIC_ITEM -> {
+                String[] split = this.value.split(",");
+                ItemStack item = ItemUtils.newItem(Registry.ITEM.get(new Identifier(split[0])), Integer.parseInt(split[1]));
+
+                if (ItemUtils.doesPlayerHaveSimilarItemWithAmount(item, player)) {
+                    ItemUtils.removeSimilarItemFromPlayerInventoryByAmount(item, player, item.getCount());
                     return true;
                 }
 
